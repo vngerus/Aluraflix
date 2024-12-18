@@ -1,7 +1,18 @@
-export default function App() {
+import React from 'react';
+import Header from './sections/Header';
+import Hero from './sections/Hero';
+import Content from './sections/Content';
+import Footer from './sections/Footer';
+
+const App: React.FC = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Aluraflix
-    </h1>
-  )
-}
+    <div>
+      <Header />
+      <Hero />
+      <Content />
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
