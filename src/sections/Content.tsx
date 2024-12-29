@@ -33,6 +33,10 @@ const Content: React.FC = () => {
         });
     }, []);
 
+    const getEmbedUrl = (url: string) => {
+        return url.replace("watch?v=", "embed/");
+    };
+
     const frontEndCards = cards.filter((card) => card.category === "Front End");
     const backEndCards = cards.filter((card) => card.category === "Back End");
     const innovationCards = cards.filter((card) => card.category === "Innovación y Gestión");
@@ -82,9 +86,10 @@ const Content: React.FC = () => {
                         key={card.id}
                         title={card.title}
                         imageUrl={card.imageUrl}
+                        videoUrl={card.videoUrl}
                         onEdit={() => setEditingCard(card)}
                         onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(card.videoUrl || "")}
+                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
                     />
                 ))}
             </div>
@@ -96,9 +101,10 @@ const Content: React.FC = () => {
                         key={card.id}
                         title={card.title}
                         imageUrl={card.imageUrl}
+                        videoUrl={card.videoUrl}
                         onEdit={() => setEditingCard(card)}
                         onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(card.videoUrl || "")}
+                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
                     />
                 ))}
             </div>
@@ -110,9 +116,10 @@ const Content: React.FC = () => {
                         key={card.id}
                         title={card.title}
                         imageUrl={card.imageUrl}
+                        videoUrl={card.videoUrl}
                         onEdit={() => setEditingCard(card)}
                         onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(card.videoUrl || "")}
+                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
                     />
                 ))}
             </div>

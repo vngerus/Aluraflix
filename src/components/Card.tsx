@@ -1,9 +1,10 @@
 import React from "react";
-import { Trash, Edit, ArrowRight } from "lucide-react";
+import { Trash2, Edit3, PlayCircle } from "lucide-react";
 
 interface CardProps {
     title: string;
     imageUrl: string;
+    videoUrl: string;
     onEdit: () => void;
     onDelete: () => void;
     onClick: () => void;
@@ -12,13 +13,17 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ title, imageUrl, onEdit, onDelete, onClick }) => {
     return (
         <div
-            className="relative bg-gray-800 rounded-lg shadow-lg w-full overflow-hidden border border-blue-500 cursor-pointer"
+            className="relative bg-gray-800 rounded-lg shadow-lg w-full overflow-hidden cursor-pointer group"
             onClick={onClick}
         >
             <div className="relative">
-                <img src={imageUrl} alt={title} className="w-full h-40 object-cover" />
-                <div className="absolute top-2 right-2 bg-black/60 p-1 rounded-full">
-                    <ArrowRight className="w-6 h-6 text-white" />
+                <img
+                    src={imageUrl}
+                    alt={title}
+                    className="w-full h-42 rounded-lg object-cover transition duration-300 group-hover:brightness-50"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <PlayCircle className="w-16 h-16 text-white transition-all duration-300 group-hover:text-red-500" />
                 </div>
             </div>
 
@@ -30,17 +35,18 @@ const Card: React.FC<CardProps> = ({ title, imageUrl, onEdit, onDelete, onClick 
                     }}
                     className="flex items-center space-x-1 text-white hover:text-red-600"
                 >
-                    <Trash className="w-5 h-5" />
+                    <Trash2 className="w-5 h-5" />
                     <span>Borrar</span>
                 </button>
+
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         onEdit();
                     }}
-                    className="flex items-center space-x-1 py-2 text-white hover:text-blue-600"
+                    className="flex items-center space-x-1 text-white hover:text-blue-600"
                 >
-                    <Edit className="w-5 h-5" />
+                    <Edit3 className="w-5 h-5" />
                     <span>Editar</span>
                 </button>
             </div>
