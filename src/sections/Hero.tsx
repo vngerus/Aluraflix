@@ -10,9 +10,9 @@ const Hero: React.FC = () => {
 
             <div className="absolute inset-0 flex flex-col lg:flex-row items-center justify-center lg:justify-between px-8 lg:px-16 space-y-8 lg:space-y-0">
                 <div className="max-w-lg text-white z-10 text-center lg:text-left order-2 lg:order-1">
-                    <span className="bg-blue-400 text-white font-bold px-4 py-1 rounded-lg text-lg">
+                    <div className="bg-blue-400 text-white font-bold py-2 rounded-md text-lg w-[10rem] border-2 border-blue-400 mx-auto lg:mx-0 flex items-center justify-center">
                         FRONT END
-                    </span>
+                    </div>
 
                     <h1 className="text-4xl font-bold mt-6">Challenge React</h1>
                     <p className="text-lg mt-2 leading-relaxed">

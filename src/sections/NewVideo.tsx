@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { ref, push } from "firebase/database";
 import { db } from "../../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const NewVideo: React.FC = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: "",
         category: "",
@@ -19,23 +21,22 @@ const NewVideo: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.imageUrl || !formData.videoUrl) {
+        if (!formData.title || !formData.category || !formData.imageUrl || !formData.videoUrl) {
             alert("Todos los campos son obligatorios.");
             return;
         }
 
-        const videosRef = ref(db, "cards");
-        await push(videosRef, formData);
+        try {
+            const videosRef = ref(db, "cards");
+            await push(videosRef, formData);
 
-        setFormData({
-            title: "",
-            category: "",
-            imageUrl: "",
-            videoUrl: "",
-            description: "",
-        });
+            alert("Nuevo video agregado con éxito.");
 
-        alert("Nuevo video agregado con éxito.");
+            navigate("/");
+        } catch (error) {
+            console.error("Error al añadir el video:", error);
+            alert("Ocurrió un error al guardar el video.");
+        }
     };
 
     return (
@@ -109,7 +110,15 @@ const NewVideo: React.FC = () => {
                     </button>
                     <button
                         type="reset"
-                        onClick={() => setFormData({ title: "", category: "", imageUrl: "", videoUrl: "", description: "" })}
+                        onClick={() =>
+                            setFormData({
+                                title: "",
+                                category: "",
+                                imageUrl: "",
+                                videoUrl: "",
+                                description: "",
+                            })
+                        }
                         className="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded"
                     >
                         Limpiar

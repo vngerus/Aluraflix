@@ -79,49 +79,61 @@ const Content: React.FC = () => {
                 />
             )}
 
-            <h2 className="text-3xl font-bold mb-6 text-blue-400">Front End</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {frontEndCards.map((card) => (
-                    <Card
-                        key={card.id}
-                        title={card.title}
-                        imageUrl={card.imageUrl}
-                        videoUrl={card.videoUrl}
-                        onEdit={() => setEditingCard(card)}
-                        onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                    />
-                ))}
+            <div className="mb-6">
+                <div className="text-center bg-blue-400 text-white py-2 rounded-md font-bold text-lg border-2 border-blue-400 w-[14rem]">
+                    FRONT END
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    {frontEndCards.map((card) => (
+                        <Card
+                            key={card.id}
+                            title={card.title}
+                            imageUrl={card.imageUrl}
+                            videoUrl={card.videoUrl}
+                            onEdit={() => setEditingCard(card)}
+                            onDelete={() => console.log("Borrar", card.id)}
+                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
+                        />
+                    ))}
+                </div>
             </div>
 
-            <h2 className="text-3xl font-bold mb-6 text-green-400">Back End</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {backEndCards.map((card) => (
-                    <Card
-                        key={card.id}
-                        title={card.title}
-                        imageUrl={card.imageUrl}
-                        videoUrl={card.videoUrl}
-                        onEdit={() => setEditingCard(card)}
-                        onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                    />
-                ))}
+            <div className="mb-6">
+                <div className="text-center bg-green-400 text-white py-2 rounded-md font-bold text-lg border-2 border-green-400 w-[14rem]">
+                    BACK END
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    {backEndCards.map((card) => (
+                        <Card
+                            key={card.id}
+                            title={card.title}
+                            imageUrl={card.imageUrl}
+                            videoUrl={card.videoUrl}
+                            onEdit={() => setEditingCard(card)}
+                            onDelete={() => console.log("Borrar", card.id)}
+                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
+                        />
+                    ))}
+                </div>
             </div>
 
-            <h2 className="text-3xl font-bold mb-6 text-yellow-400">Innovación y Gestión</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {innovationCards.map((card) => (
-                    <Card
-                        key={card.id}
-                        title={card.title}
-                        imageUrl={card.imageUrl}
-                        videoUrl={card.videoUrl}
-                        onEdit={() => setEditingCard(card)}
-                        onDelete={() => console.log("Borrar", card.id)}
-                        onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                    />
-                ))}
+            <div className="mb-6">
+                <div className="text-center bg-yellow-400 text-white py-2 rounded-md font-bold text-lg border-2 border-yellow-400 w-[14rem]">
+                    INNOVACIÓN Y GESTIÓN
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    {innovationCards.map((card) => (
+                        <Card
+                            key={card.id}
+                            title={card.title}
+                            imageUrl={card.imageUrl}
+                            videoUrl={card.videoUrl}
+                            onEdit={() => setEditingCard(card)}
+                            onDelete={() => console.log("Borrar", card.id)}
+                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

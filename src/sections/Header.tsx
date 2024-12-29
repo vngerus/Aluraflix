@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 const Header: React.FC = () => {
     return (
         <header className="flex items-center justify-between bg-AluraGris p-4">
-            <img
-                src="/assets/aluraflix.svg"
-                alt="AluraFlix Logo"
-                className="h-8"
-            />
+            <Link to="/">
+                <img
+                    src="/assets/aluraflix.svg"
+                    alt="AluraFlix Logo"
+                    className="h-8 cursor-pointer"
+                />
+            </Link>
 
             <div className="flex space-x-4">
                 <Link to="/">
