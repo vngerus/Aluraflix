@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Trash2, Edit3, PlayCircle } from "lucide-react";
 
 interface CardProps {
@@ -6,11 +6,21 @@ interface CardProps {
     imageUrl: string;
     videoUrl: string;
     onEdit: () => void;
-    onDelete: () => void;
     onClick: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, imageUrl, onEdit, onDelete, onClick }) => {
+const Card: React.FC<CardProps> = ({ title, imageUrl, onEdit, onClick }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setShowTooltip(true);
+
+        setTimeout(() => {
+            setShowTooltip(false);
+        }, 3000);
+    };
+
     return (
         <div
             className="relative bg-gray-800 rounded-lg shadow-lg w-full overflow-hidden cursor-pointer group"
@@ -28,16 +38,20 @@ const Card: React.FC<CardProps> = ({ title, imageUrl, onEdit, onDelete, onClick 
             </div>
 
             <div className="flex justify-between items-center bg-black p-2">
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onDelete();
-                    }}
-                    className="flex items-center space-x-1 text-white hover:text-red-600"
-                >
-                    <Trash2 className="w-5 h-5" />
-                    <span>Borrar</span>
-                </button>
+                <div className="relative">
+                    <button
+                        onClick={handleDelete}
+                        className="flex items-center space-x-1 text-white hover:text-red-600"
+                    >
+                        <Trash2 className="w-5 h-5" />
+                        <span>Borrar</span>
+                    </button>
+                    {showTooltip && (
+                        <div className="absolute -top-12 transform  bg-white text-black text-xs rounded-md px-4 py-2 shadow-lg w-[12rem] text-center border border-yellow-400 z-50">
+                            ⚠️ Función no disponible.
+                        </div>
+                    )}
+                </div>
 
                 <button
                     onClick={(e) => {

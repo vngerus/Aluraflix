@@ -12,6 +12,42 @@ interface CardData {
     videoUrl: string;
 }
 
+interface CategorySectionProps {
+    title: string;
+    color: string;
+    cards: CardData[];
+    onEdit: (card: CardData) => void;
+    onSelectVideo: (url: string) => void;
+}
+
+const CategorySection: React.FC<CategorySectionProps> = ({
+    title,
+    color,
+    cards,
+    onEdit,
+    onSelectVideo,
+}) => (
+    <div className="mb-6">
+        <div
+            className={`text-center ${color} text-white py-2 rounded-md font-bold text-lg border-2 ${color} w-[14rem]`}
+        >
+            {title}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            {cards.map((card) => (
+                <Card
+                    key={card.id}
+                    title={card.title}
+                    imageUrl={card.imageUrl}
+                    videoUrl={card.videoUrl}
+                    onEdit={() => onEdit(card)}
+                    onClick={() => onSelectVideo(card.videoUrl)}
+                />
+            ))}
+        </div>
+    </div>
+);
+
 const Content: React.FC = () => {
     const [cards, setCards] = useState<CardData[]>([]);
     const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -34,17 +70,20 @@ const Content: React.FC = () => {
     }, []);
 
     const getEmbedUrl = (url: string) => {
-        return url.replace("watch?v=", "embed/");
+        if (url.includes("watch?v=")) {
+            return url.replace("watch?v=", "embed/");
+        }
+        return url;
     };
 
-    const frontEndCards = cards.filter((card) => card.category === "Front End");
-    const backEndCards = cards.filter((card) => card.category === "Back End");
-    const innovationCards = cards.filter((card) => card.category === "Innovación y Gestión");
-
     const handleSave = async (updatedCard: CardData) => {
-        const cardRef = ref(db, `cards/${updatedCard.id}`);
-        await update(cardRef, updatedCard);
-        setEditingCard(null);
+        try {
+            const cardRef = ref(db, `cards/${updatedCard.id}`);
+            await update(cardRef, updatedCard);
+            setEditingCard(null);
+        } catch (error) {
+            console.error("Error al guardar la tarjeta:", error);
+        }
     };
 
     return (
@@ -55,7 +94,7 @@ const Content: React.FC = () => {
                         <iframe
                             width="100%"
                             height="400px"
-                            src={selectedVideo}
+                            src={getEmbedUrl(selectedVideo)}
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -79,62 +118,31 @@ const Content: React.FC = () => {
                 />
             )}
 
-            <div className="mb-6">
-                <div className="text-center bg-blue-400 text-white py-2 rounded-md font-bold text-lg border-2 border-blue-400 w-[14rem]">
-                    FRONT END
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                    {frontEndCards.map((card) => (
-                        <Card
-                            key={card.id}
-                            title={card.title}
-                            imageUrl={card.imageUrl}
-                            videoUrl={card.videoUrl}
-                            onEdit={() => setEditingCard(card)}
-                            onDelete={() => console.log("Borrar", card.id)}
-                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                        />
-                    ))}
-                </div>
-            </div>
+            <CategorySection
+                title="FRONT END"
+                color="bg-blue-400 border-blue-400"
+                cards={cards.filter((card) => card.category === "Front End")}
+                onEdit={(card) => setEditingCard(card)}
+                onSelectVideo={(url) => setSelectedVideo(url)}
+            />
 
-            <div className="mb-6">
-                <div className="text-center bg-green-400 text-white py-2 rounded-md font-bold text-lg border-2 border-green-400 w-[14rem]">
-                    BACK END
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                    {backEndCards.map((card) => (
-                        <Card
-                            key={card.id}
-                            title={card.title}
-                            imageUrl={card.imageUrl}
-                            videoUrl={card.videoUrl}
-                            onEdit={() => setEditingCard(card)}
-                            onDelete={() => console.log("Borrar", card.id)}
-                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                        />
-                    ))}
-                </div>
-            </div>
+            <CategorySection
+                title="BACK END"
+                color="bg-green-400 border-green-400"
+                cards={cards.filter((card) => card.category === "Back End")}
+                onEdit={(card) => setEditingCard(card)}
+                onSelectVideo={(url) => setSelectedVideo(url)}
+            />
 
-            <div className="mb-6">
-                <div className="text-center bg-yellow-400 text-white py-2 rounded-md font-bold text-lg border-2 border-yellow-400 w-[14rem]">
-                    INNOVACIÓN Y GESTIÓN
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                    {innovationCards.map((card) => (
-                        <Card
-                            key={card.id}
-                            title={card.title}
-                            imageUrl={card.imageUrl}
-                            videoUrl={card.videoUrl}
-                            onEdit={() => setEditingCard(card)}
-                            onDelete={() => console.log("Borrar", card.id)}
-                            onClick={() => setSelectedVideo(getEmbedUrl(card.videoUrl || ""))}
-                        />
-                    ))}
-                </div>
-            </div>
+            <CategorySection
+                title="INNOVACIÓN Y GESTIÓN"
+                color="bg-yellow-400 border-yellow-400"
+                cards={cards.filter(
+                    (card) => card.category === "Innovación y Gestión"
+                )}
+                onEdit={(card) => setEditingCard(card)}
+                onSelectVideo={(url) => setSelectedVideo(url)}
+            />
         </div>
     );
 };
